@@ -143,12 +143,12 @@ const Dashboard = () => {
           </h2>
         </header>
 
-        <div className="content-area">
+        <div className="content-area" key={activeTab}>
           {activeTab === 'dashboard' && (
             <div className="tab-dashboard">
               {/* Advisor Section */}
-              <div className="dash-advisor-section">
-                <div className={`advisor-box ${overspending ? 'advisor-warning' : 'advisor-success'}`}>
+              <div className="dash-advisor-section animate-entrance delay-1">
+                <div className={`advisor-box ${overspending ? 'advisor-warning pulse-red' : 'advisor-success pulse-green'}`}>
                   <span className="advisor-icon">{overspending ? '⚠️' : '✅'}</span>
                   <span className="advisor-text">
                     {overspending 
@@ -160,7 +160,7 @@ const Dashboard = () => {
 
               {/* Stats Grid */}
               <div className="dash-stats-grid">
-                <div className="dash-stat-card income-card">
+                <div className="dash-stat-card income-card animate-entrance delay-2">
                   <div className="stat-icon-wrapper income-bg">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
@@ -173,7 +173,7 @@ const Dashboard = () => {
                   </div>
                 </div>
                 
-                <div className="dash-stat-card expense-card">
+                <div className="dash-stat-card expense-card animate-entrance delay-3">
                   <div className="stat-icon-wrapper expense-bg">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline>
@@ -186,7 +186,7 @@ const Dashboard = () => {
                   </div>
                 </div>
                 
-                <div className="dash-stat-card balance-card">
+                <div className="dash-stat-card balance-card animate-entrance delay-4">
                   <div className="stat-icon-wrapper balance-bg">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <rect x="2" y="4" width="20" height="16" rx="2"></rect>
@@ -201,7 +201,7 @@ const Dashboard = () => {
               </div>
               
               {/* Transactions List */}
-              <div className="dash-list-section">
+              <div className="dash-list-section animate-entrance delay-5">
                 <div className="dash-card">
                   <div className="dash-card-header">
                     <h2 className="dash-card-title">Recent Transactions</h2>
@@ -210,15 +210,19 @@ const Dashboard = () => {
                   
                   <div className="dash-transactions-container">
                     {transactions.length === 0 ? (
-                      <div className="dash-empty-state">
+                      <div className="dash-empty-state animate-entrance delay-6">
                         <div className="empty-icon">📁</div>
                         <p>No transactions found.</p>
                         <span>Start by adding your first income or expense!</span>
                       </div>
                     ) : (
                       <ul className="dash-transaction-list">
-                        {transactions.map(t => (
-                          <li key={t._id} className="dash-transaction-item">
+                        {transactions.map((t, index) => (
+                          <li 
+                            key={t._id} 
+                            className="dash-transaction-item animate-entrance"
+                            style={{ animationDelay: `${0.3 + index * 0.05}s` }}
+                          >
                             <div className="dash-tx-left">
                               <div className={`dash-tx-icon ${t.type === 'income' ? 'income-icon-bg' : 'expense-icon-bg'}`}>
                                 {t.type === 'income' ? '+' : '-'}
@@ -246,13 +250,13 @@ const Dashboard = () => {
           )}
 
           {activeTab === 'add_expense' && (
-            <div className="tab-add-expense">
+            <div className="tab-add-expense animate-entrance delay-1">
               <div className="dash-add-section">
                 <div className="dash-card max-w-lg">
                   <h2 className="dash-card-title">New Transaction</h2>
                   <p className="dash-card-subtitle">Record your new income or expense below.</p>
                   <form onSubmit={handleAddTransaction} className="dash-form">
-                    <div className="dash-input-group">
+                    <div className="dash-input-group animate-entrance delay-2">
                       <label>Amount</label>
                       <div className="dash-input-wrapper">
                         <span className="dash-currency">$</span>
@@ -268,7 +272,7 @@ const Dashboard = () => {
                       </div>
                     </div>
                     
-                    <div className="dash-input-group">
+                    <div className="dash-input-group animate-entrance delay-3">
                       <label>Type</label>
                       <select value={type} onChange={e => setType(e.target.value)}>
                         <option value="income">Income</option>
@@ -276,7 +280,7 @@ const Dashboard = () => {
                       </select>
                     </div>
                     
-                    <button type="submit" disabled={isSubmitting} className="dash-submit-btn">
+                    <button type="submit" disabled={isSubmitting} className="dash-submit-btn animate-entrance delay-4">
                       {isSubmitting ? 'Processing...' : 'Add Transaction'}
                     </button>
                   </form>
@@ -293,12 +297,12 @@ const Dashboard = () => {
           )}
 
           {activeTab === 'reports' && (
-            <div className="tab-reports">
+            <div className="tab-reports animate-entrance delay-1">
               <div className="reports-grid">
-                <div className="dash-card chart-card">
+                <div className="dash-card chart-card animate-entrance delay-2">
                   <h2 className="dash-card-title">Monthly Spending</h2>
                   {monthlyData.length > 0 ? (
-                    <div className="chart-wrapper">
+                    <div className="chart-wrapper animate-entrance delay-3">
                       <ResponsiveContainer width="100%" height={300}>
                         <BarChart data={monthlyData} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
                           <CartesianGrid strokeDasharray="3 3" vertical={false} />
@@ -314,10 +318,10 @@ const Dashboard = () => {
                   )}
                 </div>
 
-                <div className="dash-card chart-card">
+                <div className="dash-card chart-card animate-entrance delay-4">
                   <h2 className="dash-card-title">Daily Spending Trend</h2>
                   {dailyData.length > 0 ? (
-                    <div className="chart-wrapper">
+                    <div className="chart-wrapper animate-entrance delay-5">
                       <ResponsiveContainer width="100%" height={300}>
                         <LineChart data={dailyData} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
                           <CartesianGrid strokeDasharray="3 3" vertical={false} />
