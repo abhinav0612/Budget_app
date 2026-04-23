@@ -26,7 +26,7 @@ const Dashboard = () => {
   const fetchTransactions = async () => {
     setIsFetching(true);
     try {
-      const res = await axios.get(`http://localhost:5000/transactions/${userId}`);
+      const res = await axios.get(`https://budget-app-1-6ias.onrender.com/transactions/${userId}`);
       setTransactions(res.data);
     } catch (error) {
       console.error('Error fetching transactions:', error);
@@ -41,7 +41,7 @@ const Dashboard = () => {
     setIsSubmitting(true);
     setSuccessMsg('');
     try {
-      await axios.post('http://localhost:5000/add-transaction', {
+      await axios.post('https://budget-app-1-6ias.onrender.com/add-transaction', {
         userId,
         type,
         amount: Number(amount)

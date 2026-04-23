@@ -17,7 +17,7 @@ const Auth = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const url = isLogin ? 'http://localhost:5000/login' : 'http://localhost:5000/register';
+      const url = isLogin ? 'https://budget-app-1-6ias.onrender.com/login' : 'https://budget-app-1-6ias.onrender.com/register';
       const payload = isLogin ? { email: formData.email, password: formData.password } : formData;
       const response = await axios.post(url, payload);
       
